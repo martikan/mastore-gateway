@@ -1,0 +1,26 @@
+server:
+  port: ${PORT:8081}
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: users-status-check
+          uri: lb://users-ws
+          predicates:
+            - Path=users-ws/users/status/check
+            - Method=GET
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/users-ws/(?<segment>.*), /$\{segment}
+
+  application:
+    name: api-gateway
+eureka:
+  client:
+    service-url:
+      default-zone: ${EUREKA_DEFAULT_ZONE}
