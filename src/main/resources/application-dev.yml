@@ -2,3 +2,27 @@ eureka:
   client:
     service-url:
       default-zone: ${EUREKA_DEFAULT_ZONE:http://localhost:8761}
+
+spring:
+  cloud:
+    gateway:
+      metrics:
+        enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+token:
+  expiration: ${TOKEN_EXPIRATION:864000000} # 10 days by default
+  secret: ${TOKEN_SECRET:asdWasdWASGHEt31Sh34As5}
+
+logging:
+  level:
+    org.springframework.web: ERROR
+    org.martikan.mastore: DEBUG
+    org.hibernate: DEBUG
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty.http.client: DEBUG

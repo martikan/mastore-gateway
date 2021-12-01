@@ -6,21 +6,55 @@ spring:
     gateway:
       discovery:
         locator:
-          enabled: true
+          enabled: false
           lower-case-service-id: true
       routes:
-        - id: users-status-check
-          uri: lb://users-ws
+        - id: users-ws-users-checkEmailAvailability
+          uri: lb://USERS-WS
+          order: 0
           predicates:
-            - Path=users-ws/users/status/check
-            - Method=GET
+            - Path=/users-ws/users/checkEmailAvailability
+            - Query=email
+            - Method=POST
           filters:
             - RemoveRequestHeader=Cookie
-            - RewritePath=/users-ws/(?<segment>.*), /$\{segment}
+            - RewritePath=/users-ws/?(?<remaining>.*), /$\{remaining}
+        - id: users-ws-auth
+          uri: lb://USERS-WS
+          order: 0
+          predicates:
+            - Path=/users-ws/auth/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/users-ws/?(?<remaining>.*), /$\{remaining}
+        - id: users-ws-users
+          uri: lb://USERS-WS
+          order: 1
+          predicates:
+            - Path=/users-ws/users/**
+            - Header=Authorization, Bearer (.*)
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/users-ws/?(?<remaining>.*), /$\{remaining}
+            - name: AuthorizationHeaderFilter
 
   application:
     name: api-gateway
+
+token:
+  expiration: ${TOKEN_EXPIRATION}
+  secret: ${TOKEN_SECRET}
+
 eureka:
   client:
     service-url:
       default-zone: ${EUREKA_DEFAULT_ZONE}
+
+management:
+  endpoint:
+    gateway:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: gateway
