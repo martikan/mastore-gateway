@@ -1,0 +1,5 @@
+spring:
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER_URI:http://localhost:8082}
+      name: api-config
