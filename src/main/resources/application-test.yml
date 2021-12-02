@@ -1,0 +1,14 @@
+token:
+  expiration: 864000000
+  secret: asdWasdWASGHEt31Sh34As5
+
+eureka:
+  client:
+    enabled: false
+logging:
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+  level:
+    "[org.springframework.web]": ERROR
+    "[org.martikan.mastore]": DEBUG
+    "[org.hibernate]": DEBUG
