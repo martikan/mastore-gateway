@@ -38,6 +38,8 @@ spring:
             - RewritePath=/users-ws/?(?<remaining>.*), /$\{remaining}
             - name: AuthorizationHeaderFilter
 
+  config:
+    import: optional:configserver:${CONFIG_SERVER_URI}
   application:
     name: api-gateway
 
