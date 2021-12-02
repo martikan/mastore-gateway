@@ -43,10 +43,6 @@ spring:
   application:
     name: api-gateway
 
-token:
-  expiration: ${TOKEN_EXPIRATION}
-  secret: ${TOKEN_SECRET}
-
 eureka:
   client:
     service-url:
