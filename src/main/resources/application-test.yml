@@ -1,6 +1,6 @@
 token:
-  expiration: 11-12-2012
-  secret: asd
+  expiration: 864000000
+  secret: asdWasdWASGHEt31Sh34As5
 
 eureka:
   client:
