@@ -46,7 +46,7 @@ spring:
 eureka:
   client:
     service-url:
-      default-zone: ${EUREKA_DEFAULT_ZONE}
+      defaultZone: ${EUREKA_DEFAULT_ZONE}
 
 management:
   endpoint:
